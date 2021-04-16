@@ -1,46 +1,59 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Button, TextInput } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  FlatList,
+  ScrollView,
+  TouchableOpacity,
+  Touchable,
+} from "react-native";
 
 export default function App() {
-  const [name, setName] = useState("shaun");
-  const [age, setAge] = useState("30");
-  // const [person, setPerson] = useState({
-  //   name: "mario",
-  //   age: 40,
-  // });
-
-  // const clickHandler = () => {
-  //   setName("chun-li");
-  //   setPerson({ name: "luigi", age: 45 });
-  // };
+  const [people, setPeople] = useState([
+    { name: "Shaun", id: "1" },
+    { name: "Yoshi", id: "2" },
+    { name: "Mario", id: "3" },
+    { name: "Luigi", id: "4" },
+    { name: "Peach", id: "5" },
+    { name: "Toad", id: "6" },
+    { name: "Bowser", id: "7" },
+  ]);
+  const pressHandler = (id) => {
+    console.log(id);
+    setPeople((prevPeople) => {
+      return prevPeople.filter((person) => person.id !== id);
+    });
+  };
 
   return (
     <View style={styles.container}>
-      <Text>Enter name:</Text>
-      <TextInput
-        multiline
-        keybor
-        style={styles.input}
-        placeholder="e.g. Jhon Doe"
-        onChangeText={(value) => setName(value)}
-      />
-      <Text>Enter age:</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="e.g. 99"
-        keyboardType="numeric"
-        onChangeText={(value) => setAge(value)}
+      <FlatList
+        numColumns={2}
+        // key={id}
+        keyExtractor={(item) => {
+          return item.id;
+        }}
+        data={people}
+        renderItem={({ item }) => {
+          return (
+            <TouchableOpacity onPress={() => pressHandler(item.id)}>
+              <Text style={styles.item}>{item.name}</Text>
+            </TouchableOpacity>
+          );
+        }}
       />
 
-      <Text>
-        name: {name}, age: {age}
-      </Text>
-      {/* <Text>
-        He's name is {person.name} and his age is {person.age}
-      </Text> */}
-      {/* <View style={styles.buttonContainer}>
-        <Button title="update state" onPress={clickHandler} />
-      </View> */}
+      {/* <ScrollView>
+        {people.map((item) => {
+          return (
+            <View key={item.key}>
+              <Text style={styles.item}>{item.name}</Text>
+            </View>
+          );
+        })}
+      </ScrollView> */}
     </View>
   );
 }
@@ -49,18 +62,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    paddingTop: 40,
+    paddingHorizontal: 20,
   },
-  buttonContainer: {
-    marginTop: 20,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "#777",
-    padding: 8,
-    margin: 10,
-    width: 200,
+  item: {
+    marginTop: 24,
+    padding: 30,
+    backgroundColor: "pink",
+    fontSize: 24,
+    marginHorizontal: 10,
+    marginTop: 24,
   },
   // header: {
   //   backgroundColor: "pink",

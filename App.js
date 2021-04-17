@@ -16,6 +16,7 @@ import {
 import Header from "./components/header";
 import TodoItem from "./components/todoItem";
 import AddTodo from "./components/addTodo";
+import Sandbox from "./components/sandbox";
 
 export default function App() {
   const [todos, setTodos] = useState([
@@ -48,6 +49,7 @@ export default function App() {
   };
 
   return (
+    // <Sandbox />
     <TouchableWithoutFeedback
       onPress={() => {
         Keyboard.dismiss();
@@ -80,9 +82,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   content: {
+    flex: 1,
+    // backgroundColor: "cyan", // to visualize the content
     padding: 40,
   },
   list: {
+    flex: 1,
     marginTop: 20,
+    // backgroundColor: "skyblue", // to visualize the list
   },
 });
